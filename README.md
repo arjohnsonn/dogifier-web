@@ -1,9 +1,8 @@
 # Dogifier
 
-An extension that adds dogs to your images. Made as a trial/interview for an internship position at YourMove.AI
+A web app of my extension that adds dogs to your images. Made as a trial/interview for an internship position at YourMove.AI
 
 <img width="1490" alt="image" src="https://github.com/user-attachments/assets/56770e98-beb9-4b3d-9539-1ea740194581" />
-
 
 ## Techstack
 
