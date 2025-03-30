@@ -138,7 +138,7 @@ export default function Home() {
                   {dogImage ? (
                     <div className="flex flex-row gap-x-2">
                       <Button
-                        text={`COPY`}
+                        text="COPY"
                         color="bg-[#404040]"
                         onClick={() => {
                           fetch(dogImage!)
@@ -155,7 +155,7 @@ export default function Home() {
                         }}
                       />
                       <Button
-                        text={`SAVE`}
+                        text="SAVE"
                         color="bg-[#404040]"
                         onClick={() => {
                           fetch(dogImage)
@@ -176,7 +176,7 @@ export default function Home() {
                         }}
                       />
                       <Button
-                        text={`RESET`}
+                        text="RESET"
                         color="bg-[#404040]"
                         onClick={() => {
                           setDogImage(null);
@@ -194,26 +194,28 @@ export default function Home() {
                       />
                     </div>
                   ) : (
-                    <Button
-                      text="DOGIFY"
-                      color="bg-[#D93B3A]"
-                      onClick={async () => {
-                        setLoading(true);
-                        setDogImage(null);
+                    imagePreview && (
+                      <Button
+                        text="DOGIFY"
+                        color="bg-[#D93B3A]"
+                        onClick={async () => {
+                          setLoading(true);
+                          setDogImage(null);
 
-                        const { URL, Error } = await submitImage({
-                          imagePath: imagePreview!,
-                        });
+                          const { URL, Error } = await submitImage({
+                            imagePath: imagePreview!,
+                          });
 
-                        if (URL) {
-                          setDogImage(URL);
-                        } else {
-                          setError(Error!);
-                        }
+                          if (URL) {
+                            setDogImage(URL);
+                          } else {
+                            setError(Error!);
+                          }
 
-                        setLoading(false);
-                      }}
-                    />
+                          setLoading(false);
+                        }}
+                      />
+                    )
                   )}
                 </div>
               )}
