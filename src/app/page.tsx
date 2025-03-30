@@ -65,7 +65,7 @@ export default function Home() {
 
           <div>
             <div className="p-4">
-              <div className="flex flex-col items-center mt-4 w-84 h-78 rounded-2xl p-3 bg-black/40">
+              <div className="flex flex-col items-center mt-14 w-84 h-78 rounded-2xl p-3 bg-black/40">
                 {!loading && !dogImage && (
                   <div
                     className={`p-2 rounded-lg flex flex-col h-full justify-center items-center ${
