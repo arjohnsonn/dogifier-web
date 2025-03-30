@@ -83,7 +83,11 @@ export default function Home() {
 
           <div>
             <div className="p-4">
-              <div className="flex flex-col items-center mt-14 w-84 h-78 rounded-2xl p-3 bg-black/40">
+              <div
+                className={`flex flex-col items-center mt-14 w-84 ${
+                  dogImage || imagePreview ? "h-full" : "h-84"
+                } rounded-2xl p-3 bg-black/40`}
+              >
                 {!loading && !dogImage && (
                   <div
                     className={`p-2 rounded-lg flex flex-col h-full justify-center items-center ${
@@ -118,14 +122,14 @@ export default function Home() {
                       <img
                         src={dogImage}
                         alt="Dogified"
-                        className="rounded w-md max-h-56 object-contain"
+                        className="rounded-2xl w-xl max-h-72 object-contain"
                       />
                     ) : (
                       imagePreview && (
                         <img
                           src={imagePreview}
                           alt="Uploaded"
-                          className="rounded w-md max-h-56 object-contain"
+                          className="rounded-2xl w-xl max-h-72 object-contain"
                         />
                       )
                     )}
@@ -231,6 +235,7 @@ export default function Home() {
 
                           if (URL) {
                             setDogImage(URL);
+                            setError(null);
                           } else {
                             setError(Error!);
                           }

@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
     }
 
     const usageCount = usageData ? usageData.count : 0;
+    console.log(usageCount);
     if (usageCount >= 3) {
       return NextResponse.json(
         { error: "Rate limit exceeded. You have used this feature 3 times." },

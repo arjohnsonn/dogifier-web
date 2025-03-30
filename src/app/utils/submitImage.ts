@@ -42,71 +42,25 @@ const submitImage = async (props: Props) => {
     console.log("Success:", data);
   }
 
-  const { imagePath } = props;
-  const base64Image = await fileToBase64(imagePath);
+  const base64Image = await fileToBase64(props.imagePath);
 
-  const contents = [
-    {
-      text: "Add a dog to this photo. Do NOT, under any means, modify any other part of the image. Just add a dog.",
-    },
-    {
-      inlineData: {
-        mimeType: "image/png",
-        data: base64Image,
-      },
-    },
-  ];
+  const response2 = await fetch("/api/submit-image", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ base64Image: base64Image }),
+  });
 
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash-exp-image-generation",
-      contents: contents,
-      config: {
-        responseModalities: ["Text", "Image"],
-      },
-    });
-
-    if (!response) {
-      return {
-        Error: "No response from AI. Please try again",
-      };
-    }
-
-    const imagePart = response.candidates![0].content!.parts!.find(
-      (part) => part.inlineData
-    );
-
-    if (imagePart) {
-      const imageData: string = imagePart.inlineData!.data as string;
-
-      const byteCharacters = atob(imageData);
-      const byteNumbers = new Array(byteCharacters.length);
-      for (let i = 0; i < byteCharacters.length; i++) {
-        byteNumbers[i] = byteCharacters.charCodeAt(i);
-      }
-      const byteArray = new Uint8Array(byteNumbers);
-      const blob = new Blob([byteArray], { type: "image/png" });
-      const url = URL.createObjectURL(blob);
-
-      return {
-        URL: url,
-      };
-    } else {
-      return {
-        Error: "No image part found in the response. Please try again",
-      };
-    }
-  } catch (e) {
-    console.warn("Error:", e);
+  if (!response2.ok) {
+    const errorData = await response2.json();
     return {
-      Error:
-        e +
-        "Trace: " +
-        (e as Error).stack +
-        " Response: " +
-        JSON.stringify(response),
+      Error: "Error: " + errorData.error,
     };
   }
+
+  const responseJson = await response2.json();
+  console.log("Response from AI:", responseJson);
+
+  return { URL: responseJson.URL };
 };
 
 export default submitImage;
