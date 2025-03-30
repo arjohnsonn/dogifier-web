@@ -37,25 +37,30 @@ export default function Home() {
         </h3>
 
         <div className="flex md:flex-row flex-col justify-center items-center w-full mt-12 gap-x-2">
-          <div className="flex flex-row justify-center items-center w-96 mt-4 gap-x-2">
-            <ReactCompareSlider
-              itemOne={
-                <ReactCompareSliderImage
-                  src="/before.jpg"
-                  srcSet="/before.jpg"
-                  alt="Image one"
-                  className="w-8 h-20"
-                />
-              }
-              itemTwo={
-                <ReactCompareSliderImage
-                  src="/after.png"
-                  srcSet="/after.png"
-                  alt="Image two"
-                  className="w-8 h-20"
-                />
-              }
-            />
+          <div className="flex flex-col items-center mt-4">
+            <p className="text-2xl csshadow font-bold text-white text-center">
+              Example
+            </p>
+            <div className="flex flex-row justify-center items-center w-96 mt-2 gap-x-2">
+              <ReactCompareSlider
+                itemOne={
+                  <ReactCompareSliderImage
+                    src="/before.jpg"
+                    srcSet="/before.jpg"
+                    alt="Image one"
+                    className="w-8 h-20"
+                  />
+                }
+                itemTwo={
+                  <ReactCompareSliderImage
+                    src="/after.png"
+                    srcSet="/after.png"
+                    alt="Image two"
+                    className="w-8 h-20"
+                  />
+                }
+              />
+            </div>
           </div>
 
           <div>
