@@ -6,6 +6,9 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_KEY,
 });
 
+const PROMPT =
+  "Add a dog to this photo. Do NOT, under any means, modify any other part of the image, even a little bit. Keep everything the same. Do NOT remove any objects of focus such as a person. JUST ADD THE DOG ONLY.";
+
 export async function POST(req: NextRequest) {
   const { base64Image } = await req.json();
   if (!base64Image) {
@@ -17,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const contents = [
     {
-      text: "Add a dog to this photo. Do NOT, under any means, modify any other part of the image. Just add a dog.",
+      text: PROMPT,
     },
     {
       inlineData: {

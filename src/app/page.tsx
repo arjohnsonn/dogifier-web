@@ -37,7 +37,7 @@ export default function Home() {
         </h3>
 
         <div className="flex md:flex-row flex-col justify-center items-center w-full mt-12 gap-x-2">
-          <div className="flex flex-col items-center mt-4">
+          <div className="flex flex-col items-center">
             <p className="text-2xl csshadow font-bold text-white text-center">
               Example
             </p>
@@ -236,7 +236,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="p-4 mt-12 flex flex-col items-center">
+        <div className="p-4 mt-14 flex flex-col items-center">
           <p className="text-xs font-semilight text-white text-center">
             <b>Fun Fact:</b> Studies show that dogs do well on dating profiles!
           </p>
