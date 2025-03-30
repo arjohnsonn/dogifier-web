@@ -21,13 +21,21 @@ export default function Home() {
   return (
     <>
       <Head>
+        <link
+          rel="icon"
+          type="image/x-icon"
+          href="https://i.imgur.com/Gv8rmae.png[/img]"
+        />
         <meta content="Dogifier" property="og:title" />
         <meta
           content="Add a dog to any photo using AI"
           property="og:description"
         />
-        <meta content="/paw-print.svg" property="og:image" />
-        <meta content="#9b3a3a" data-react-helmet="true" name="theme-color" />
+        <meta
+          content="https://i.imgur.com/Gv8rmae.png[/img]"
+          property="og:image"
+        />
+        <meta content="#F54242" data-react-helmet="true" name="theme-color" />
       </Head>
       <main className="flex flex-col min-h-screen w-full bg-gradient-to-br from-[#9b3a3a] to-[#262626]">
         <div className="flex flex-row justify-center w-full mt-12 csshadow">

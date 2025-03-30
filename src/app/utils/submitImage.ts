@@ -47,7 +47,7 @@ const submitImage = async (props: Props) => {
 
   const contents = [
     {
-      text: "Add a dog to this photo",
+      text: "Add a dog to this photo. Do NOT, under any means, modify any other part of the image. Just add a dog.",
     },
     {
       inlineData: {
