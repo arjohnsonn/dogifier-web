@@ -23,7 +23,7 @@ A web app of my extension that adds dogs to your images. Made as a trial/intervi
 2. Run `pnpm install`.
 3. Create a `.env` file in the root directory with the following content:
    ```env
-   NEXT_PUBLIC_GEMINI_KEY=your_api_key_here
+   GEMINI_KEY=your_api_key_here
    NEXT_PUBLIC_SUPABASE_URL=your_api_key_here
    SUPABASE_SERVICE_KEY=your_api_key_here
    ```
