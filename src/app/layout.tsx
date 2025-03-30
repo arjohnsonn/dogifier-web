@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Dogifier",
     description: "Add a dog to any photo using AI",
-    images: ["https://i.imgur.com/Gv8rmae.png"],
+    images: [{ url: "https://i.imgur.com/Gv8rmae.png" }],
   },
   themeColor: "#F54242",
 };
