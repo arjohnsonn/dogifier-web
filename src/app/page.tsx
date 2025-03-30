@@ -21,7 +21,6 @@ export default function Home() {
   return (
     <>
       <Head>
-        <link rel="icon" type="image/x-icon" href="Images/favicon.ico" />
         <meta content="Dogifier" property="og:title" />
         <meta
           content="Add a dog to any photo using AI"
