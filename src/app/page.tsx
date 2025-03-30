@@ -241,7 +241,7 @@ export default function Home() {
             <div className="p-4 -mt-2 flex flex-col items-center">
               <p className="text-xs font-semilight text-white text-center">
                 This extension is for entertainment purposes only. You{" "}
-                <i>shouldn't</i> use fake dogs on dating profiles. You can
+                <i>should not</i> use fake dogs on dating profiles. You can
                 improve your dating profile by using{" "}
                 <a
                   className="text-blue-500 underline"
