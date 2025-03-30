@@ -1,103 +1,262 @@
+"use client";
+
 import Image from "next/image";
+import { useState } from "react";
+import Button from "./components/Button";
+import { OrbitProgress } from "react-loading-indicators";
+import submitImage from "./utils/submitImage";
+import {
+  ReactCompareSlider,
+  ReactCompareSliderImage,
+} from "react-compare-slider";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [dogImage, setDogImage] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [showDisclaimer, setShowDisclaimer] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+  return (
+    <>
+      <main className="flex flex-col min-h-screen w-full bg-gradient-to-br from-[#9b3a3a] to-[#262626]">
+        <div className="flex flex-row justify-center w-full mt-12 csshadow">
+          <h1 className="text-7xl font-bold text-white mr-3">Dogifier</h1>
+          <Image
+            src="/paw-print.svg"
+            width={64}
+            height={64}
+            alt="Paw Print"
+            className="w-16 h-16"
+            style={{ filter: "brightness(0) invert(1)" }} // to make it white
+          />
+        </div>
+
+        <h3 className="text-xl font-medium text-white text-center mt-5 csshadow">
+          Add a dog to any photo using AI
+        </h3>
+
+        <div className="flex md:flex-row flex-col justify-center items-center w-full mt-12 gap-x-2">
+          <div className="flex flex-row justify-center items-center w-96 mt-4 gap-x-2">
+            <ReactCompareSlider
+              itemOne={
+                <ReactCompareSliderImage
+                  src="/before.jpg"
+                  srcSet="/before.jpg"
+                  alt="Image one"
+                  className="w-8 h-20"
+                />
+              }
+              itemTwo={
+                <ReactCompareSliderImage
+                  src="/after.png"
+                  srcSet="/after.png"
+                  alt="Image two"
+                  className="w-8 h-20"
+                />
+              }
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          </div>
+
+          <div>
+            <div className="p-4">
+              <div className="flex flex-col items-center mt-4 w-84 h-78 rounded-2xl p-3 bg-black/40">
+                {!loading && !dogImage && (
+                  <div
+                    className={`p-2 rounded-lg flex flex-col h-full justify-center items-center ${
+                      imagePreview || dogImage ? "bg-black/30" : ""
+                    }`}
+                  >
+                    <label
+                      htmlFor="fileInput"
+                      className="text-sm font-semibold text-center cursor-pointer"
+                    >
+                      {imagePreview ? "Change Photo" : "Upload Photo"}
+                    </label>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      id="fileInput"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setImagePreview(
+                            URL.createObjectURL(e.target.files[0])
+                          );
+                        }
+                      }}
+                    />
+                  </div>
+                )}
+
+                {dogImage || imagePreview ? (
+                  <div className="flex items-center justify-center h-full w-full">
+                    {dogImage ? (
+                      <img
+                        src={dogImage}
+                        alt="Dogified"
+                        className="rounded w-md max-h-56 object-contain"
+                      />
+                    ) : (
+                      imagePreview && (
+                        <img
+                          src={imagePreview}
+                          alt="Uploaded"
+                          className="rounded w-md max-h-56 object-contain"
+                        />
+                      )
+                    )}
+                  </div>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </div>
+
+            <div className="w-full flex flex-col items-center">
+              {error && (
+                <p className="text-red-500 text-sm font-semibold mb-3">
+                  {error}
+                </p>
+              )}
+              {loading ? (
+                <OrbitProgress
+                  color="#ffffff"
+                  size="small"
+                  text=""
+                  style={{ width: "20px", height: "20px" }}
+                />
+              ) : (
+                <div className="flex flex-row gap-x-2">
+                  {dogImage ? (
+                    <div className="flex flex-row gap-x-2">
+                      <Button
+                        text={`COPY`}
+                        color="bg-[#404040]"
+                        onClick={() => {
+                          fetch(dogImage!)
+                            .then((response) => response.blob())
+                            .then((blob) => {
+                              const item = new ClipboardItem({
+                                [blob.type]: blob,
+                              });
+                              return navigator.clipboard.write([item]);
+                            })
+                            .catch((err) => {
+                              console.error("Failed to copy image:", err);
+                            });
+                        }}
+                      />
+                      <Button
+                        text={`SAVE`}
+                        color="bg-[#404040]"
+                        onClick={() => {
+                          fetch(dogImage)
+                            .then((response) => response.blob())
+                            .then((blob) => {
+                              const url = window.URL.createObjectURL(blob);
+                              const link = document.createElement("a");
+                              link.href = url;
+                              link.download = "dogified.png";
+                              document.body.appendChild(link);
+                              link.click();
+                              document.body.removeChild(link);
+                              window.URL.revokeObjectURL(url);
+                            })
+                            .catch((err) => {
+                              console.error("Error saving image:", err);
+                            });
+                        }}
+                      />
+                      <Button
+                        text={`RESET`}
+                        color="bg-[#404040]"
+                        onClick={() => {
+                          setDogImage(null);
+                          setImagePreview(null);
+                          setError(null);
+                          setLoading(false);
+
+                          const fileInput = document.getElementById(
+                            "fileInput"
+                          ) as HTMLInputElement;
+                          if (fileInput) {
+                            fileInput.value = "";
+                          }
+                        }}
+                      />
+                    </div>
+                  ) : (
+                    <Button
+                      text="DOGIFY"
+                      color="bg-[#D93B3A]"
+                      onClick={async () => {
+                        setLoading(true);
+                        setDogImage(null);
+
+                        const { URL, Error } = await submitImage({
+                          imagePath: imagePreview!,
+                        });
+
+                        if (URL) {
+                          setDogImage(URL);
+                        } else {
+                          setError(Error!);
+                        }
+
+                        setLoading(false);
+                      }}
+                    />
+                  )}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="p-4 mt-16 flex flex-col items-center">
+          <p className="text-xs font-semilight text-white text-center">
+            <b>Fun Fact:</b> Studies show that dogs do well on dating profiles!
+          </p>
+        </div>
+
+        <div className="-mt-2 flex flex-col items-center">
+          <Button
+            text={`View Disclaimer ${showDisclaimer ? "▲" : "▼"}`}
+            style="px-5 py-2 font-semibold text-white rounded-2xl csshadow-lt cursor-pointer"
+            onClick={() => {
+              setShowDisclaimer(!showDisclaimer);
+            }}
+          />
+          {showDisclaimer ? (
+            <div className="p-4 -mt-2 flex flex-col items-center">
+              <p className="text-xs font-semilight text-white text-center">
+                This extension is for entertainment purposes only. You{" "}
+                <i>shouldn't</i> use fake dogs on dating profiles. You can
+                improve your dating profile by using{" "}
+                <a
+                  className="text-blue-500 underline"
+                  target="_blank"
+                  href="https://yourmove.ai"
+                >
+                  YourMove.AI
+                </a>
+              </p>
+            </div>
+          ) : (
+            <p className="text-xs mb-2">
+              {/* Made by{" "}
+                <a
+                  className="text-blue-500 underline"
+                  target="_blank"
+                  href="https://yourmove.ai"
+                >
+                  YourMove.AI
+                </a> */}
+            </p>
+          )}
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+    </>
   );
 }
