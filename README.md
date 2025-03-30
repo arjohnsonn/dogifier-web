@@ -9,7 +9,7 @@ An extension that adds dogs to your images. Made as a trial/interview for an int
 
 - React
 - TypeScript
-- Vite
+- Next.js
 
 ## Features
 
@@ -25,6 +25,8 @@ An extension that adds dogs to your images. Made as a trial/interview for an int
 3. Create a `.env` file in the root directory with the following content:
    ```env
    NEXT_PUBLIC_GEMINI_KEY=your_api_key_here
+   NEXT_PUBLIC_SUPABASE_URL=your_api_key_here
+   SUPABASE_SERVICE_KEY=your_api_key_here
    ```
 4. Replace `your_api_key_here` with a Google Gemini API key.
 
