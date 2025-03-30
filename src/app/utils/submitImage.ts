@@ -28,8 +28,21 @@ async function fileToBase64(url: string): Promise<string> {
 }
 
 const submitImage = async (props: Props) => {
+  const response = await fetch("/api/rate-limit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    return {
+      Error: "Error: " + data.error,
+    };
+  } else {
+    console.log("Success:", data);
+  }
+
   const { imagePath } = props;
-  // Instead of fs.readFileSync, fetch the image and convert it to base64
   const base64Image = await fileToBase64(imagePath);
 
   const contents = [
@@ -85,7 +98,7 @@ const submitImage = async (props: Props) => {
     }
   } catch (e) {
     return {
-      Error: "Error: " + e,
+      Error: "Error: " + e + " Response: " + JSON.stringify(response),
     };
   }
 };

@@ -115,8 +115,15 @@ export default function Home() {
 
             <div className="w-full flex flex-col items-center">
               {error && (
-                <p className="text-red-500 text-sm font-semibold mb-3">
-                  {error}
+                <p className="text-red-500 text-xs text-center text-wrap justify-center font-semibold mb-3">
+                  {error
+                    .split(" ")
+                    .reduce<React.ReactNode[]>((acc, word, idx, arr) => {
+                      if ((idx + 1) % 6 === 0 && idx !== arr.length - 1) {
+                        return [...acc, word, <br key={idx} />];
+                      }
+                      return [...acc, word, " "];
+                    }, [] as React.ReactNode[])}
                 </p>
               )}
               {loading ? (
