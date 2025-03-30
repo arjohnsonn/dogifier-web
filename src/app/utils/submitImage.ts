@@ -38,8 +38,6 @@ const submitImage = async (props: Props) => {
     return {
       Error: "Error: " + data.error,
     };
-  } else {
-    console.log("Success:", data);
   }
 
   const base64Image = await fileToBase64(props.imagePath);
@@ -58,7 +56,6 @@ const submitImage = async (props: Props) => {
   }
 
   const responseJson = await response2.json();
-  console.log("Response from AI:", responseJson);
 
   return { URL: responseJson.URL };
 };

@@ -43,8 +43,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    console.log("Response from AI model:", response);
-
     if (!response.candidates![0].content) {
       return NextResponse.json(
         { error: `AI Gen Error: ${response.candidates![0].finishReason}` },
