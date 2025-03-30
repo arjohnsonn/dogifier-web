@@ -27,9 +27,14 @@ const submitImage = async (props: Props) => {
     headers: { "Content-Type": "application/json" },
   });
   const data = await response.json();
+  console.log("Rate limit response:", data);
   if (!response.ok) {
     return {
       Error: "Error: " + data.error,
+    };
+  } else if (!data) {
+    return {
+      Error: "Error: You have reached the limit of 3 images generations.",
     };
   }
 
@@ -41,20 +46,20 @@ const submitImage = async (props: Props) => {
     body: JSON.stringify({ base64Image: base64Image }),
   });
 
+  const responseJson = await response2.json();
   if (!response2.ok) {
-    const errorData = await response2.json();
     return {
-      Error: "" + errorData.error,
+      Error: "" + responseJson.error,
     };
   }
-
-  const responseJson = await response2.json();
 
   await fetch("/api/rate-limit", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({}),
   });
+
+  console.log("Image submitted successfully:", responseJson);
 
   return { URL: responseJson.URL };
 };

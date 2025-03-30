@@ -7,14 +7,14 @@ const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
 
-export async function GET(req: NextRequest) {
+const LIMIT = 3;
+
+export async function GET() {
   try {
     // Get the client's IP address. We try the x-forwarded-for header first,
     // then fall back to req.ip.
     const headersList = await headers();
     const ip = headersList.get("x-forwarded-for");
-
-    console.log(ip);
 
     if (!ip) {
       return NextResponse.json(
@@ -35,7 +35,7 @@ export async function GET(req: NextRequest) {
     }
 
     const usageCount = usageData ? usageData.count : 0;
-    return NextResponse.json({ limit: usageCount }, { status: 200 });
+    return NextResponse.json(usageCount < LIMIT, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { error: "Internal Server Error: " + error },
@@ -77,21 +77,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: usageError.message }, { status: 500 });
     }
 
-    const usageCount = usageData ? usageData.count : 0;
-    console.log(usageCount);
-    if (usageCount >= 3) {
-      return NextResponse.json(
-        { error: "Rate limit exceeded. You have used this feature 3 times." },
-        { status: 429 }
-      );
-    }
+    let usageCount = usageData ? usageData.count : 0;
 
     // Update the usage count in Supabase:
+    usageCount += 1;
+
     // If the IP already exists, increment the count; otherwise, insert a new record.
     if (usageData) {
       const { error: updateError } = await supabase
         .from("limit")
-        .update({ count: usageCount + 1 })
+        .update({ count: usageCount })
         .eq("ip", ip);
       if (updateError) {
         return NextResponse.json(

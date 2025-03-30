@@ -11,7 +11,6 @@ export const metadata: Metadata = {
     description: "Add a dog to any photo using AI",
     images: [{ url: "https://i.imgur.com/Gv8rmae.png" }],
   },
-  themeColor: "#F54242",
 };
 
 export default function RootLayout({
