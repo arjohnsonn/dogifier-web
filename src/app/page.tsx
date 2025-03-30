@@ -9,7 +9,6 @@ import {
   ReactCompareSlider,
   ReactCompareSliderImage,
 } from "react-compare-slider";
-import Head from "next/head";
 
 export default function Home() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -20,23 +19,6 @@ export default function Home() {
 
   return (
     <>
-      <Head>
-        <link
-          rel="icon"
-          type="image/x-icon"
-          href="https://i.imgur.com/Gv8rmae.png[/img]"
-        />
-        <meta content="Dogifier" property="og:title" />
-        <meta
-          content="Add a dog to any photo using AI"
-          property="og:description"
-        />
-        <meta
-          content="https://i.imgur.com/Gv8rmae.png[/img]"
-          property="og:image"
-        />
-        <meta content="#F54242" data-react-helmet="true" name="theme-color" />
-      </Head>
       <main className="flex flex-col min-h-screen w-full bg-gradient-to-br from-[#9b3a3a] to-[#262626]">
         <div className="flex flex-row justify-center w-full mt-12 csshadow">
           <h1 className="text-7xl font-bold text-white mr-3">Dogifier</h1>
