@@ -45,7 +45,9 @@ export async function POST(req: NextRequest) {
 
     if (!response.candidates![0].content) {
       return NextResponse.json(
-        { error: `AI Gen Error: ${response.candidates![0].finishReason}` },
+        {
+          error: `AI Generation Error: ${response.candidates![0].finishReason}`,
+        },
         { status: 500 }
       );
     }

@@ -45,7 +45,7 @@ const submitImage = async (props: Props) => {
   if (!response2.ok) {
     const errorData = await response2.json();
     return {
-      Error: "Error: " + errorData.error,
+      Error: "" + errorData.error,
     };
   }
 

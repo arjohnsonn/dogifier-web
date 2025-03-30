@@ -18,13 +18,13 @@ export async function POST(req: NextRequest) {
     // Get the client's IP address. We try the x-forwarded-for header first,
     // then fall back to req.ip.
     const headersList = await headers();
-    const ip = headersList.get("x-forwarded-for") || "121.0.0.1";
+    const ip = headersList.get("x-forwarded-for");
 
     console.log(ip);
 
     if (!ip) {
       return NextResponse.json(
-        { error: "Unable to determine IP address" },
+        { error: "Unable to retrieve limits for user" },
         { status: 400 }
       );
     }
