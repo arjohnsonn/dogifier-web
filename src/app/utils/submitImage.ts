@@ -23,9 +23,8 @@ async function fileToBase64(url: string): Promise<string> {
 
 const submitImage = async (props: Props) => {
   const response = await fetch("/api/rate-limit", {
-    method: "POST",
+    method: "GET",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({}),
   });
   const data = await response.json();
   if (!response.ok) {
@@ -50,6 +49,12 @@ const submitImage = async (props: Props) => {
   }
 
   const responseJson = await response2.json();
+
+  await fetch("/api/rate-limit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({}),
+  });
 
   return { URL: responseJson.URL };
 };

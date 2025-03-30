@@ -236,7 +236,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="p-4 mt-16 flex flex-col items-center">
+        <div className="p-4 mt-12 flex flex-col items-center">
           <p className="text-xs font-semilight text-white text-center">
             <b>Fun Fact:</b> Studies show that dogs do well on dating profiles!
           </p>
@@ -244,7 +244,7 @@ export default function Home() {
 
         <div className="-mt-2 flex flex-col items-center">
           <Button
-            text={`View Disclaimer ${showDisclaimer ? "▲" : "▼"}`}
+            text={`View Disclaimers ${showDisclaimer ? "▲" : "▼"}`}
             style="px-5 py-2 font-semibold text-white rounded-2xl csshadow-lt cursor-pointer"
             onClick={() => {
               setShowDisclaimer(!showDisclaimer);
@@ -252,6 +252,10 @@ export default function Home() {
           />
           {showDisclaimer ? (
             <div className="p-4 -mt-2 flex flex-col items-center">
+              <p className="text-xs font-semilight text-white text-center">
+                Each user is limited to 3 successful attempts.
+              </p>
+              <br />
               <p className="text-xs font-semilight text-white text-center">
                 This extension is for entertainment purposes only. You{" "}
                 <i>should not</i> use fake dogs on dating profiles. You can
