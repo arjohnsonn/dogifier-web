@@ -68,7 +68,7 @@ const submitImage = async (props: Props) => {
 
     if (!response) {
       return {
-        Error: "Error: No response from AI. Please try again",
+        Error: "No response from AI. Please try again",
       };
     }
 
@@ -93,12 +93,18 @@ const submitImage = async (props: Props) => {
       };
     } else {
       return {
-        Error: "Error: No image part found in the response. Please try again",
+        Error: "No image part found in the response. Please try again",
       };
     }
   } catch (e) {
+    console.warn("Error:", e);
     return {
-      Error: "Error: " + e + " Response: " + JSON.stringify(response),
+      Error:
+        e +
+        "Trace: " +
+        (e as Error).stack +
+        " Response: " +
+        JSON.stringify(response),
     };
   }
 };
