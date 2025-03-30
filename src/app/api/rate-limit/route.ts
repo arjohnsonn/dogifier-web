@@ -2,9 +2,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { headers } from "next/headers";
 import { createClient } from "@supabase/supabase-js";
-import submitImage from "../../utils/submitImage";
 
-// Initialize Supabase client using your environment variables
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL as string;
 const supabaseKey = process.env.SUPABASE_SERVICE_KEY as string;
 const supabase = createClient(supabaseUrl, supabaseKey);
