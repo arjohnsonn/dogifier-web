@@ -212,6 +212,7 @@ export default function Home() {
                         onClick={async () => {
                           setLoading(true);
                           setDogImage(null);
+                          setError(null);
 
                           const { URL, Error } = await submitImage({
                             imagePath: imagePreview!,
