@@ -61,6 +61,7 @@ export default function Home() {
             </p>
             <div className="flex flex-row justify-center items-center w-96 mt-2 gap-x-2">
               <ReactCompareSlider
+                onlyHandleDraggable={true}
                 itemOne={
                   <ReactCompareSliderImage
                     src="/before.jpg"
