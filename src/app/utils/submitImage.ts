@@ -1,9 +1,3 @@
-import { GoogleGenAI } from "@google/genai";
-
-const ai = new GoogleGenAI({
-  apiKey: process.env.NEXT_PUBLIC_GEMINI_KEY,
-});
-
 type Props = {
   imagePath: string; // URL path to the image, e.g., '/assets/image.png'
 };
